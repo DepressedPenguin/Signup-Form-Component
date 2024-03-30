@@ -1,0 +1,105 @@
+.main_container {
+  background-color: #191919;
+  background-image: url(/src/img/image.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form_zone {
+  width: 40%;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-gap: 10px 10px;
+  padding: 10px;
+}
+
+.progress_bar_checks {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.mark_progress {
+  background-color: rgb(217, 55, 55);
+  font-weight: 700;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.3;
+  height: 40px;
+  width: 120px;
+  border-radius: 5px;
+  transition: background-color 0.6s, opacity 2s;
+}
+
+.fill_mark {
+  background-color: rgb(51, 171, 51);
+  width: 120px;
+  opacity: 1;
+  transition: background-color 0.6s, opacity 2s;
+}
+
+.input {
+  -webkit-backdrop-filter: blur(200px);
+          backdrop-filter: blur(200px);
+  border-radius: 20px;
+  height: 486px;
+}
+
+.form_container {
+  padding: 10px;
+}
+
+.headline_singup {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  flex-direction: column;
+  color: white;
+  border-bottom: 1px solid white;
+}
+
+button {
+  width: 150px;
+  height: 40px;
+  border: 1px solid white;
+  border-radius: 5px;
+  box-shadow: 2px 2px 2px #191919;
+}
+
+button:active {
+  background-color: #191919;
+  opacity: 0.8;
+}
+
+label {
+  color: white;
+}
+
+h1 + p {
+  text-decoration: underline;
+}
+
+@media only screen and (max-width: 1200px) {
+  .mark_progress {
+    width: 100px;
+    font-size: 14px;
+  }
+  .progress_bar_checks {
+    width: 90%;
+    margin: auto;
+  }
+  .alert {
+    width: 90%;
+    margin: auto;
+  }
+  .form_zone {
+    width: 100%;
+  }
+}/*# sourceMappingURL=style.css.map */

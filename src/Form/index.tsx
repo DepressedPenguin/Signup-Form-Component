@@ -3,99 +3,78 @@ import "./style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function Form() {
-  // LIST OF ERROES
-  const [errors, Seterrors] = useState([]);
-  const [success, Setsuccess] = useState(false);
-  const mark_emailRef = useRef();
-  const marrk_passwordRef = useRef();
-  const mark_repassword = useRef();
-  const mark_checkbox = useRef();
+  const [errors, setErrors] = useState<string[]>([]);
+  const [success, setSuccess] = useState<boolean>(false);
 
-  const emailRef = useRef();
-  const passwordRef = useRef();
-  const repasswordRef = useRef();
-  const checkboxRef = useRef();
+  const mark_emailRef = useRef<HTMLDivElement>(null);
+  const marrk_passwordRef = useRef<HTMLDivElement>(null);
+  const mark_repassword = useRef<HTMLDivElement>(null);
+  const mark_checkbox = useRef<HTMLDivElement>(null);
 
-  // VALADTION FUNCTION
-  const formValaditon = () => {
-    Seterrors([]);
-    const email = emailRef.current.value;
-    const password = passwordRef.current.value;
-    const repassword = repasswordRef.current.value;
-    const ischeckbox = checkboxRef.current.checked;
+  const emailRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
+  const repasswordRef = useRef<HTMLInputElement>(null);
+  const checkboxRef = useRef<HTMLInputElement>(null);
+
+  const formValidation = () => {
+    setErrors([]);
+    const email = emailRef.current?.value;
+    const password = passwordRef.current?.value;
+    const repassword = repasswordRef.current?.value;
+    const isCheckbox = checkboxRef.current?.checked;
     let isFormValid = true;
 
-    if (email.trim() === "") {
-      Seterrors((prev) => {
-        return [...prev, "EMAIL MISSING!"];
-      });
-      mark_emailRef.current.classList.remove("fill_mark");
+    if (!email || email.trim() === "") {
+      setErrors((prev) => [...prev, "EMAIL MISSING!"]);
+      if (mark_emailRef.current)
+        mark_emailRef.current.classList.remove("fill_mark");
       isFormValid = false;
     } else {
-      mark_emailRef.current.classList.add("fill_mark");
+      if (mark_emailRef.current)
+        mark_emailRef.current.classList.add("fill_mark");
     }
 
-    // PASSWORD
-
-    if (password.trim() === "") {
-      Seterrors((prev) => {
-        return [...prev, "Password MISSING!"];
-      });
-      marrk_passwordRef.current.classList.remove("fill_mark");
+    if (!password || password.trim() === "") {
+      setErrors((prev) => [...prev, "Password MISSING!"]);
+      if (marrk_passwordRef.current)
+        marrk_passwordRef.current.classList.remove("fill_mark");
       isFormValid = false;
     } else {
-      marrk_passwordRef.current.classList.add("fill_mark");
+      if (marrk_passwordRef.current)
+        marrk_passwordRef.current.classList.add("fill_mark");
     }
 
-    // RE PASSWORD
-    if (repassword.trim() === "") {
-      Seterrors((prev) => {
-        return [...prev, "Re-enter Password MISSING!"];
-      });
-      mark_repassword.current.classList.remove("fill_mark");
+    if (!repassword || repassword.trim() === "") {
+      setErrors((prev) => [...prev, "Re-enter Password MISSING!"]);
+      if (mark_repassword.current)
+        mark_repassword.current.classList.remove("fill_mark");
       isFormValid = false;
     } else if (repassword !== password) {
-      Seterrors((prev) => {
-        return [...prev, "Passwords do not match!"];
-      });
-      mark_repassword.current.classList.remove("fill_mark");
+      setErrors((prev) => [...prev, "Passwords do not match!"]);
+      if (mark_repassword.current)
+        mark_repassword.current.classList.remove("fill_mark");
       isFormValid = false;
     } else {
-      mark_repassword.current.classList.add("fill_mark");
+      if (mark_repassword.current)
+        mark_repassword.current.classList.add("fill_mark");
     }
 
-    // CHECKBOX
-
-    if (!ischeckbox) {
-      Seterrors((prev) => {
-        return [...prev, "Fill The Privacy!"];
-      });
-      mark_checkbox.current.classList.remove("fill_mark");
+    if (!isCheckbox) {
+      setErrors((prev) => [...prev, "Fill The Privacy!"]);
+      if (mark_checkbox.current)
+        mark_checkbox.current.classList.remove("fill_mark");
       isFormValid = false;
     } else {
-      mark_checkbox.current.classList.add("fill_mark");
+      if (mark_checkbox.current)
+        mark_checkbox.current.classList.add("fill_mark");
     }
 
-    Setsuccess(isFormValid);
-
-    // if (isFormValid) {
-    //   Setsuccess(true);
-    //   Seterrors([]);
-    // } else {
-    //   Setsuccess(false);
-    // }
+    setSuccess(isFormValid);
   };
 
-  // SUBMOT FORM
-  const submitForm = (e) => {
+  const submitForm = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    formValaditon();
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      formValaditon();
-    }
+    formValidation();
   };
 
   return (
@@ -125,8 +104,8 @@ export default function Form() {
           {errors.length > 0 ? (
             <div className="alert alert-danger">
               {errors.map((error, key) => (
-                <ul>
-                  <li key={key}>{error}</li>
+                <ul key={key}>
+                  <li>{error}</li>
                 </ul>
               ))}
             </div>
@@ -147,30 +126,27 @@ export default function Form() {
                 className="form-control"
               />
             </div>
-            {/* PASSWORD */}
             <div className="form-group form_container">
               <label htmlFor="Password">Password :</label>
               <input
                 type="password"
-                placeholder="Pssword"
+                placeholder="Password"
                 className="form-control"
                 ref={passwordRef}
               />
             </div>
-            {/* REWRITE PASSWORD */}
             <div className="form-group form_container">
               <label htmlFor="Password">Confirm Password :</label>
               <input
                 type="password"
-                placeholder="Pssword Again"
+                placeholder="Password Again"
                 className="form-control"
                 ref={repasswordRef}
               />
             </div>
-            {/* CHECKBOX */}
             <div className="form-group form_container">
               <label htmlFor="Password" className="label_checkbox">
-                Privacy Policy{" "}
+                Privacy Policy
               </label>
               <input
                 ref={checkboxRef}
@@ -178,11 +154,8 @@ export default function Form() {
                 className="custom-checkbox"
               />
             </div>
-            {/* BUTOON_SUBBMIT */}
             <div className="form-group form_container">
-              <button onKeyUp={handleKeyPress} onClick={submitForm}>
-                SING UP NOW
-              </button>
+              <button onClick={submitForm}>SING UP NOW</button>
             </div>
           </div>
         </div>
